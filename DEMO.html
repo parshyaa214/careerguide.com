@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Career Assessment with AI Counselor</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Orbitron:wght@500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #ecf0f1;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 70%);
+  pointer-events: none;
+}
+
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  width: 0%;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(255, 75, 43, 0.6);
+}
+
+.section {
+  height: 100vh;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: fadeSlide 0.7s ease;
+  padding: 20px;
+}
+
+.section.active {
+  display: flex;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.icon {
+  font-size: 60px;
+  margin-bottom: 18px;
+  color: #ff4b2b;
+  text-shadow: 0 0 12px rgba(255, 75, 43, 0.6);
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+input, select {
+  padding: 14px;
+  width: 320px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
+  color: #ecf0f1;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 18px;
+  transition: 0.3s;
+}
+
+input::placeholder {
+  color: rgba(236,240,241,0.6);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #ff4b2b;
+  box-shadow: 0 0 0 3px rgba(255, 75, 43, 0.25);
+}
+
+button {
+  padding: 12px 32px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 75, 43, 0.5);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#result {
+  font-size: 18px;
+  text-align: center;
+  max-width: 900px;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+
+/* Chatbot Styles */
+.chat-container {
+  width: 90%;
+  max-width: 800px;
+  height: 70vh;
+  background: rgba(0,0,0,0.4);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.chat-header {
+  padding: 20px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(255, 75, 43, 0.5);
+  border-radius: 10px;
+}
+
+.message {
+  padding: 12px 18px;
+  border-radius: 18px;
+  max-width: 80%;
+  word-wrap: break-word;
+  animation: messageSlide 0.3s ease;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.user {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.message.bot {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  align-self: flex-start;
+}
+
+.message.typing {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  align-self: flex-start;
+  padding: 15px 20px;
+}
+
+.typing-indicator {
+  display: flex;
+  gap: 5px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4b2b;
+  animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+.chat-input-container {
+  padding: 20px;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.chat-input-container input {
+  flex: 1;
+  margin: 0;
+  text-align: left;
+}
+
+.chat-input-container button {
+  padding: 12px 24px;
+  white-space: nowrap;
+}
+
+.api-key-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.api-key-section input {
+  width: 400px;
+  margin-top: 10px;
+}
+
+.api-key-section small {
+  display: block;
+  margin-top: 10px;
+  color: rgba(236,240,241,0.7);
+  font-size: 14px;
+}
+
+.api-key-section a {
+  color: #ff4b2b;
+  text-decoration: none;
+}
+
+.api-key-section a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- Q1 -->
+<div class="section active">
+  <div class="icon">📘</div>
+  <h1>What is your 10th Percentage?</h1>
+  <input type="number" id="tenth">
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q2 -->
+<div class="section">
+  <div class="icon">📗</div>
+  <h1>What is your 12th Percentage?</h1>
+  <input type="number" id="twelfth">
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q3 -->
+<div class="section">
+  <div class="icon">🎓</div>
+  <h1>Select your 12th Stream</h1>
+  <select id="stream">
+    <option value="">Select</option>
+    <option value="science">Science 🔬</option>
+    <option value="commerce">Commerce 💼</option>
+    <option value="arts">Arts 🎨</option>
+    <option value="other">Other 🧩</option>
+  </select>
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q4 -->
+<div class="section">
+  <div class="icon">❤️</div>
+  <h1>What are you interested in?</h1>
+  <select id="interest">
+    <option value="">Select</option>
+    <option value="technology">Technology 💻</option>
+    <option value="medical">Medical 🩺</option>
+    <option value="business">Business 📊</option>
+    <option value="creative">Creative 🎭</option>
+    <option value="government">Government 🏛️</option>
+    <option value="sports">Sports 🏃</option>
+  </select>
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q5 -->
+<div class="section">
+  <div class="icon">🧠</div>
+  <h1>Your strongest skill?</h1>
+  <select id="skill">
+    <option value="">Select</option>
+    <option value="logic">Logical Thinking</option>
+    <option value="communication">Communication</option>
+    <option value="creativity">Creativity</option>
+    <option value="leadership">Leadership</option>
+  </select>
+  <button onclick="showResult()">Finish 🚀</button>
+</div>
+
+<!-- RESULT -->
+<div class="section">
+  <div class="icon">🎯</div>
+  <h1>Your Career Path</h1>
+  <div id="result"></div>
+  <button onclick="openChat()" style="margin-top: 30px;">💬 Chat with AI Career Counselor</button>
+</div>
+
+<!-- AI CHAT -->
+<div class="section">
+  <div class="icon">🤖</div>
+  <h1>AI Career Counselor</h1>
+  
+  <div class="api-key-section" id="apiKeySection">
+    <p>Enter your Google Gemini API Key to start chatting</p>
+    <input type="password" id="apiKey" placeholder="Enter your Gemini API Key">
+    <button onclick="startChat()">Start Chat</button>
+    <small>Get your free API key from <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a></small>
+  </div>
+  
+  <div class="chat-container" id="chatContainer" style="display: none;">
+    <div class="chat-header">
+      💬 Ask me anything about your career path, exams, or study tips!
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-container">
+      <input type="text" id="chatInput" placeholder="Type your question here..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()" id="sendBtn">Send 🚀</button>
+    </div>
+  </div>
+  
+  <button onclick="backToResult()" style="margin-top: 20px;">← Back to Results</button>
+</div>
+
+<script>
+const sections = document.querySelectorAll(".section");
+const progress = document.getElementById("progress");
+let index = 0;
+let userProfile = {};
+let apiKey = "";
+
+function next() {
+  if (index === 0) {
+    const tenth = parseFloat(document.getElementById("tenth").value);
+    if (!tenth || tenth < 0 || tenth > 100) {
+      alert("Please enter a valid percentage between 0 and 100");
+      return;
+    }
+  }
+  
+  if (index === 1) {
+    const twelfth = parseFloat(document.getElementById("twelfth").value);
+    if (!twelfth || twelfth < 0 || twelfth > 100) {
+      alert("Please enter a valid percentage between 0 and 100");
+      return;
+    }
+  }
+  
+  if (index < sections.length - 2) {
+    sections[index].classList.remove("active");
+    index++;
+    sections[index].classList.add("active");
+    progress.style.width = ((index) / (sections.length - 1)) * 100 + "%";
+  }
+}
+
+function showResult() {
+  const tenth = parseFloat(document.getElementById("tenth").value);
+  const twelfth = parseFloat(document.getElementById("twelfth").value);
+  const stream = document.getElementById("stream").value;
+  const interest = document.getElementById("interest").value;
+  const skill = document.getElementById("skill").value;
+
+  userProfile = { tenth, twelfth, stream, interest, skill };
+
+  let career = "";
+  let exams = "";
+
+  if (stream === "science" && interest === "technology") {
+    career = "Software Engineer, AI Engineer, Data Scientist, Cyber Security Expert, Cloud Engineer";
+    exams = "JEE Main, JEE Advanced, CUET, GATE, Coding Assessments";
+  }
+  else if (stream === "science" && interest === "medical") {
+    career = "Doctor, Pharmacist, Physiotherapist, Medical Researcher, Biomedical Engineer";
+    exams = "NEET-UG, AIIMS, State Medical CET, Nursing Entrance Exams";
+  }
+  else if (stream === "science" && interest === "business") {
+    career = "MBA (Healthcare / Tech), Product Manager, Business Analyst, Startup Founder";
+    exams = "CAT, XAT, SNAP, NMAT, CUET-PG";
+  }
+  else if (stream === "science" && interest === "government") {
+    career = "UPSC, MPSC, Defence Services, ISRO, DRDO Scientist";
+    exams = "UPSC CSE, MPSC, CDS, AFCAT, ISRO/DRDO Exams";
+  }
+  else if (stream === "commerce" && interest === "business") {
+    career = "CA, CS, CMA, MBA, Investment Banker, Entrepreneur";
+    exams = "CA Foundation, CS Foundation, CMA, CAT, XAT";
+  }
+  else if (stream === "commerce" && interest === "technology") {
+    career = "Business Analyst, Data Analyst, FinTech Specialist, Digital Marketing Analyst";
+    exams = "CUET, NISM Certifications, Data Analytics Exams";
+  }
+  else if (stream === "commerce" && interest === "government") {
+    career = "Banking Officer, SSC, Income Tax Officer, RBI Grade B";
+    exams = "IBPS PO, SBI PO, SSC CGL, RBI Grade B";
+  }
+  else if (stream === "arts" && interest === "creative") {
+    career = "Graphic Designer, UI/UX Designer, Animator, Content Creator, Film Maker";
+    exams = "NIFT, NID, UCEED, Film Institute Entrance Exams";
+  }
+  else if (stream === "arts" && interest === "business") {
+    career = "MBA, Advertising Manager, Media Planner, Brand Manager";
+    exams = "CAT, XAT, SNAP, CUET-PG";
+  }
+  else if (stream === "arts" && interest === "government") {
+    career = "UPSC, MPSC, Teaching, Law, Defence Services";
+    exams = "UPSC, MPSC, CLAT, NET/SET, CDS";
+  }
+  else if (stream === "other" && interest === "technology") {
+    career = "Web Developer, App Developer, Ethical Hacker, UI/UX Designer";
+    exams = "Skill Certifications, CEH, Google/Microsoft Exams";
+  }
+  else if (stream === "other" && interest === "creative") {
+    career = "Freelancer, Content Creator, Graphic Designer, YouTuber";
+    exams = "Portfolio-Based (No Mandatory Exams), Platform Certifications";
+  }
+  else if (interest === "government") {
+    career = "UPSC, MPSC, SSC, Banking, Defence Services";
+    exams = "UPSC, SSC CGL, IBPS, Defence Exams";
+  }
+  else if (interest === "sports") {
+    career = "Professional Athlete, Coach, Fitness Trainer, Sports Manager";
+    exams = "Khelo India Trials, Sports Authority of India (SAI), NIS Coaching Exams";
+  }
+  else {
+    career = "Skill-based courses, Freelancing, Entrepreneurship, Professional Certifications";
+    exams = "Skill Certification Exams, Online Professional Tests";
+  }
+
+  if (skill === "logic") career += ", Data Analyst, Research Scientist";
+  if (skill === "communication") career += ", HR Manager, Sales Executive";
+  if (skill === "creativity") career += ", Designer, Content Strategist";
+  if (skill === "leadership") career += ", Project Manager, Startup Founder";
+
+  userProfile.career = career;
+  userProfile.exams = exams;
+
+  const avgPercentage = (tenth + twelfth) / 2;
+  let improvementMsg = "";
+  
+  if (tenth < 50 || twelfth < 40) {
+    improvementMsg = `<br><br>🚨 <b>Critical Improvement Required:</b><br>`;
+    if (tenth < 50) improvementMsg += `Your 10th percentage (${tenth}%) is below 50%. `;
+    if (twelfth < 40) improvementMsg += `Your 12th percentage (${twelfth}%) is below 40%. `;
+    improvementMsg += `<br><br>These scores may limit your eligibility for many competitive exams. <b>Immediate Action Plan:</b><br>
+    • Focus on strengthening basics in all core subjects<br>
+    • Dedicate 6-8 hours daily to structured study<br>
+    • Join foundation courses or coaching for weak subjects<br>
+    • Practice previous year papers extensively<br>
+    • Consider improvement exams if available<br>
+    • Explore diploma/certificate courses to build skills<br>
+    • Target: Work towards 60%+ minimum for better opportunities`;
+  }
+  else if (avgPercentage < 60) {
+    improvementMsg = `<br><br>⚠️ <b>Important Note:</b><br>Your current average is ${avgPercentage.toFixed(1)}%. To compete in these exams, you need to significantly improve your academic performance. Focus on:<br>
+    • Building strong fundamentals in core subjects<br>
+    • Consistent daily study routine (4-6 hours)<br>
+    • Taking regular mock tests<br>
+    • Seeking guidance from mentors or coaching<br>
+    • Target: Aim for 75%+ to have better chances in competitive exams`;
+  } else if (avgPercentage < 75) {
+    improvementMsg = `<br><br>💡 <b>Tip:</b><br>Your average is ${avgPercentage.toFixed(1)}%. While this is decent, aiming for 75%+ will give you more opportunities and better preparation for competitive exams. Keep working hard!`;
+  }
+
+  sections[index].classList.remove("active");
+  index++;
+  sections[index].classList.add("active");
+  progress.style.width = "100%";
+
+  document.getElementById("result").innerHTML =
+    `✨ <b>Career Options:</b><br>${career}
+     <br><br>📘 <b>Competitive Exams to Prepare:</b><br>${exams}${improvementMsg}`;
+}
+
+function openChat() {
+  sections[index].classList.remove("active");
+  index++;
+  sections[index].classList.add("active");
+}
+
+function backToResult() {
+  sections[index].classList.remove("active");
+  index--;
+  sections[index].classList.add("active");
+}
+
+function startChat() {
+  const key = document.getElementById("apiKey").value.trim();
+  if (!key) {
+    alert("Please enter your Gemini API key");
+    return;
+  }
+  apiKey = key;
+  document.getElementById("apiKeySection").style.display = "none";
+  document.getElementById("chatContainer").style.display = "flex";
+  
+  addBotMessage("Hello! I'm your AI Career Counselor powered by Google Gemini. I have your assessment results. Feel free to ask me anything about your career path, study strategies, exam preparation, or any specific concerns you have!");
+}
+
+function addUserMessage(text) {
+  const messagesDiv = document.getElementById("chatMessages");
+  const msgDiv = document.createElement("div");
+  msgDiv.className = "message user";
+  msgDiv.textContent = text;
+  messagesDiv.appendChild(msgDiv);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function addBotMessage(text) {
+  const messagesDiv = document.getElementById("chatMessages");
+  const msgDiv = document.createElement("div");
+  msgDiv.className = "message bot";
+  msgDiv.innerHTML = text;
+  messagesDiv.appendChild(msgDiv);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function showTyping() {
+  const messagesDiv = document.getElementById("chatMessages");
+  const typingDiv = document.createElement("div");
+  typingDiv.className = "message typing";
+  typingDiv.id = "typingIndicator";
+  typingDiv.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+  messagesDiv.appendChild(typingDiv);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function removeTyping() {
+  const typingDiv = document.getElementById("typingIndicator");
+  if (typingDiv) typingDiv.remove();
+}
+
+async function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const message = input.value.trim();
+  
+  if (!message) return;
+  
+  addUserMessage(message);
+  input.value = "";
+  
+  const sendBtn = document.getElementById("sendBtn");
+  sendBtn.disabled = true;
+  input.disabled = true;
+  
+  showTyping();
+  
+  try {
+    const contextPrompt = `You are a helpful and knowledgeable career counselor for Indian students. 
+
+Student Profile:
+- 10th Percentage: ${userProfile.tenth}%
+- 12th Percentage: ${userProfile.twelfth}%
+- Stream: ${userProfile.stream}
+- Interest: ${userProfile.interest}
+- Strongest Skill: ${userProfile.skill}
+- Recommended Careers: ${userProfile.career}
+- Relevant Exams: ${userProfile.exams}
+
+Provide personalized, actionable advice based on this student's profile. Be encouraging but realistic. Focus on Indian education system, competitive exams, and career paths.
+
+Student's question: ${message}`;
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{
+          parts: [{ text: contextPrompt }]
+        }]
+      })
+    });
+    
+    const data = await response.json();
+    
+    removeTyping();
+    
+    if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+      const botResponse = data.candidates[0].content.parts[0].text;
+      addBotMessage(botResponse);
+    } else {
+      addBotMessage("Sorry, I couldn't process that. Please try again or check your API key.");
+    }
+    
+  } catch (error) {
+    removeTyping();
+    addBotMessage("Sorry, there was an error connecting to the AI. Please check your API key and internet connection.");
+    console.error(error);
+  }
+  
+  sendBtn.disabled = false;
+  input.disabled = false;
+  input.focus();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login & Register</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: white;
+  width: 350px;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  display: none;
+}
+
+.container.active {
+  display: block;
+}
+
+h2 {
+  text-align: center;
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  background: #1976d2;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0d47a1;
+}
+
+p {
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div class="container active" id="login">
+  <h2>Login</h2>
+
+  <input type="email" placeholder="Email" id="loginEmail" required>
+  <input type="password" placeholder="Password" id="loginPassword" required>
+
+  <button onclick="login()">Login</button>
+
+  <p>New user? <a onclick="showRegister()">Register</a></p>
+</div>
+
+<!-- REGISTER PAGE -->
+<div class="container" id="register">
+  <h2>Register</h2>
+
+  <input type="text" placeholder="Full Name" id="name" required>
+  <input type="email" placeholder="Email" id="regEmail" required>
+  <input type="password" placeholder="Password" id="regPassword" required>
+
+  <button onclick="register()">Register</button>
+
+  <p>Already have an account? <a onclick="showLogin()">Login</a></p>
+</div>
+
+<script>
+function hideAll() {
+  document.getElementById("login").classList.remove("active");
+  document.getElementById("register").classList.remove("active");
+}
+
+function showRegister() {
+  hideAll();
+  document.getElementById("register").classList.add("active");
+}
+
+function showLogin() {
+  hideAll();
+  document.getElementById("login").classList.add("active");
+}
+
+function register() {
+  alert("Registration successful! Now login.");
+  showLogin();
+}
+
+function login() {
+  alert("Login successful!");
+  // next step: redirect to assessment page
+}
+</script>
+
+</body>
+</html>

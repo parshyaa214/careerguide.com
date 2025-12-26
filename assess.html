@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Career Assessment</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Orbitron:wght@500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #ecf0f1;
+  overflow: hidden;
+}
+
+/* Soft mist overlay (very subtle) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 70%);
+  pointer-events: none;
+}
+
+/* Progress bar */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  width: 0%;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px rgba(255, 75, 43, 0.6);
+}
+
+/* Sections */
+.section {
+  height: 100vh;
+  width: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: fadeSlide 0.7s ease;
+}
+
+.section.active {
+  display: flex;
+}
+
+/* Smooth cinematic entry */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Icons */
+.icon {
+  font-size: 60px;
+  margin-bottom: 18px;
+  color: #ff4b2b;
+  text-shadow: 0 0 12px rgba(255, 75, 43, 0.6);
+}
+
+/* Headings */
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Inputs */
+input, select {
+  padding: 14px;
+  width: 320px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
+  color: #ecf0f1;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 18px;
+  transition: 0.3s;
+}
+
+input::placeholder {
+  color: rgba(236,240,241,0.6);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #ff4b2b;
+  box-shadow: 0 0 0 3px rgba(255, 75, 43, 0.25);
+}
+
+/* Buttons */
+button {
+  padding: 12px 32px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 75, 43, 0.5);
+}
+
+/* Result */
+#result {
+  font-size: 18px;
+  text-align: center;
+  max-width: 900px;
+  line-height: 1.7;
+  margin-top: 10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- Q1 -->
+<div class="section active">
+  <div class="icon">📘</div>
+  <h1>What is your 10th Percentage?</h1>
+  <input type="number" id="tenth">
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q2 -->
+<div class="section">
+  <div class="icon">📗</div>
+  <h1>What is your 12th Percentage?</h1>
+  <input type="number" id="twelfth">
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q3 -->
+<div class="section">
+  <div class="icon">🎓</div>
+  <h1>Select your 12th Stream</h1>
+  <select id="stream">
+    <option value="">Select</option>
+    <option value="science">Science 🔬</option>
+    <option value="commerce">Commerce 💼</option>
+    <option value="arts">Arts 🎨</option>
+    <option value="other">Other 🧩</option>
+  </select>
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q4 -->
+<div class="section">
+  <div class="icon">❤️</div>
+  <h1>What are you interested in?</h1>
+  <select id="interest">
+    <option value="">Select</option>
+    <option value="technology">Technology 💻</option>
+    <option value="medical">Medical 🩺</option>
+    <option value="business">Business 📊</option>
+    <option value="creative">Creative 🎭</option>
+    <option value="government">Government 🏛️</option>
+    <option value="sports">Sports 🏃</option>
+  </select>
+  <button onclick="next()">Next ➜</button>
+</div>
+
+<!-- Q5 -->
+<div class="section">
+  <div class="icon">🧠</div>
+  <h1>Your strongest skill?</h1>
+  <select id="skill">
+    <option value="">Select</option>
+    <option value="logic">Logical Thinking</option>
+    <option value="communication">Communication</option>
+    <option value="creativity">Creativity</option>
+    <option value="leadership">Leadership</option>
+  </select>
+  <button onclick="showResult()">Finish 🚀</button>
+</div>
+
+<!-- RESULT -->
+<div class="section">
+  <div class="icon">🎯</div>
+  <h1>Your Career Path</h1>
+  <div id="result"></div>
+</div>
+
+<script>
+const sections = document.querySelectorAll(".section");
+const progress = document.getElementById("progress");
+let index = 0;
+
+function next() {
+  // Validate 10th percentage
+  if (index === 0) {
+    const tenth = parseFloat(document.getElementById("tenth").value);
+    if (!tenth || tenth < 0 || tenth > 100) {
+      alert("Please enter a valid percentage between 0 and 100");
+      return;
+    }
+  }
+  
+  // Validate 12th percentage
+  if (index === 1) {
+    const twelfth = parseFloat(document.getElementById("twelfth").value);
+    if (!twelfth || twelfth < 0 || twelfth > 100) {
+      alert("Please enter a valid percentage between 0 and 100");
+      return;
+    }
+  }
+  
+  if (index < sections.length - 2) {
+    sections[index].classList.remove("active");
+    index++;
+    sections[index].classList.add("active");
+    progress.style.width = ((index) / (sections.length - 1)) * 100 + "%";
+  }
+}
+
+function showResult() {
+  const tenth = parseFloat(document.getElementById("tenth").value);
+  const twelfth = parseFloat(document.getElementById("twelfth").value);
+  const stream = document.getElementById("stream").value;
+  const interest = document.getElementById("interest").value;
+  const skill = document.getElementById("skill").value;
+
+  let career = "";
+  let exams = "";
+
+  /* ================= SCIENCE ================= */
+  if (stream === "science" && interest === "technology") {
+    career = "Software Engineer, AI Engineer, Data Scientist, Cyber Security Expert, Cloud Engineer";
+    exams = "JEE Main, JEE Advanced, CUET, GATE, Coding Assessments";
+  }
+
+  else if (stream === "science" && interest === "medical") {
+    career = "Doctor, Pharmacist, Physiotherapist, Medical Researcher, Biomedical Engineer";
+    exams = "NEET-UG, AIIMS, State Medical CET, Nursing Entrance Exams";
+  }
+
+  else if (stream === "science" && interest === "business") {
+    career = "MBA (Healthcare / Tech), Product Manager, Business Analyst, Startup Founder";
+    exams = "CAT, XAT, SNAP, NMAT, CUET-PG";
+  }
+
+  else if (stream === "science" && interest === "government") {
+    career = "UPSC, MPSC, Defence Services, ISRO, DRDO Scientist";
+    exams = "UPSC CSE, MPSC, CDS, AFCAT, ISRO/DRDO Exams";
+  }
+
+  /* ================= COMMERCE ================= */
+  else if (stream === "commerce" && interest === "business") {
+    career = "CA, CS, CMA, MBA, Investment Banker, Entrepreneur";
+    exams = "CA Foundation, CS Foundation, CMA, CAT, XAT";
+  }
+
+  else if (stream === "commerce" && interest === "technology") {
+    career = "Business Analyst, Data Analyst, FinTech Specialist, Digital Marketing Analyst";
+    exams = "CUET, NISM Certifications, Data Analytics Exams";
+  }
+
+  else if (stream === "commerce" && interest === "government") {
+    career = "Banking Officer, SSC, Income Tax Officer, RBI Grade B";
+    exams = "IBPS PO, SBI PO, SSC CGL, RBI Grade B";
+  }
+
+  /* ================= ARTS ================= */
+  else if (stream === "arts" && interest === "creative") {
+    career = "Graphic Designer, UI/UX Designer, Animator, Content Creator, Film Maker";
+    exams = "NIFT, NID, UCEED, Film Institute Entrance Exams";
+  }
+
+  else if (stream === "arts" && interest === "business") {
+    career = "MBA, Advertising Manager, Media Planner, Brand Manager";
+    exams = "CAT, XAT, SNAP, CUET-PG";
+  }
+
+  else if (stream === "arts" && interest === "government") {
+    career = "UPSC, MPSC, Teaching, Law, Defence Services";
+    exams = "UPSC, MPSC, CLAT, NET/SET, CDS";
+  }
+
+  /* ================= OTHER ================= */
+  else if (stream === "other" && interest === "technology") {
+    career = "Web Developer, App Developer, Ethical Hacker, UI/UX Designer";
+    exams = "Skill Certifications, CEH, Google/Microsoft Exams";
+  }
+
+  else if (stream === "other" && interest === "creative") {
+    career = "Freelancer, Content Creator, Graphic Designer, YouTuber";
+    exams = "Portfolio-Based (No Mandatory Exams), Platform Certifications";
+  }
+
+  else if (interest === "government") {
+    career = "UPSC, MPSC, SSC, Banking, Defence Services";
+    exams = "UPSC, SSC CGL, IBPS, Defence Exams";
+  }
+
+  /* ================= SPORTS ================= */
+  else if (interest === "sports") {
+    career = "Professional Athlete, Coach, Fitness Trainer, Sports Manager";
+    exams = "Khelo India Trials, Sports Authority of India (SAI), NIS Coaching Exams";
+  }
+
+  /* ================= DEFAULT ================= */
+  else {
+    career = "Skill-based courses, Freelancing, Entrepreneurship, Professional Certifications";
+    exams = "Skill Certification Exams, Online Professional Tests";
+  }
+
+  /* ================= SKILL BOOST ================= */
+  if (skill === "logic")
+    career += ", Data Analyst, Research Scientist";
+
+  if (skill === "communication")
+    career += ", HR Manager, Sales Executive";
+
+  if (skill === "creativity")
+    career += ", Designer, Content Strategist";
+
+  if (skill === "leadership")
+    career += ", Project Manager, Startup Founder";
+
+  // Check if percentages are below critical thresholds
+  const avgPercentage = (tenth + twelfth) / 2;
+  let improvementMsg = "";
+  
+  // Specific checks for 10th and 12th
+  if (tenth < 50 || twelfth < 40) {
+    improvementMsg = `<br><br>🚨 <b>Critical Improvement Required:</b><br>`;
+    
+    if (tenth < 50) {
+      improvementMsg += `Your 10th percentage (${tenth}%) is below 50%. `;
+    }
+    if (twelfth < 40) {
+      improvementMsg += `Your 12th percentage (${twelfth}%) is below 40%. `;
+    }
+    
+    improvementMsg += `<br><br>These scores may limit your eligibility for many competitive exams. <b>Immediate Action Plan:</b><br>
+    • Focus on strengthening basics in all core subjects<br>
+    • Dedicate 6-8 hours daily to structured study<br>
+    • Join foundation courses or coaching for weak subjects<br>
+    • Practice previous year papers extensively<br>
+    • Consider improvement exams if available<br>
+    • Explore diploma/certificate courses to build skills<br>
+    • Target: Work towards 60%+ minimum for better opportunities`;
+  }
+  else if (avgPercentage < 60) {
+    improvementMsg = `<br><br>⚠️ <b>Important Note:</b><br>Your current average is ${avgPercentage.toFixed(1)}%. To compete in these exams, you need to significantly improve your academic performance. Focus on:<br>
+    • Building strong fundamentals in core subjects<br>
+    • Consistent daily study routine (4-6 hours)<br>
+    • Taking regular mock tests<br>
+    • Seeking guidance from mentors or coaching<br>
+    • Target: Aim for 75%+ to have better chances in competitive exams`;
+  } else if (avgPercentage < 75) {
+    improvementMsg = `<br><br>💡 <b>Tip:</b><br>Your average is ${avgPercentage.toFixed(1)}%. While this is decent, aiming for 75%+ will give you more opportunities and better preparation for competitive exams. Keep working hard!`;
+  }
+
+  sections[index].classList.remove("active");
+  index++;
+  sections[index].classList.add("active");
+  progress.style.width = "100%";
+
+  document.getElementById("result").innerHTML =
+    `✨ <b>Career Options:</b><br>${career}
+     <br><br>📘 <b>Competitive Exams to Prepare:</b><br>${exams}${improvementMsg}`;
+}
+</script>
+
+</body>
+</html>

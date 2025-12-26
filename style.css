@@ -1,0 +1,17 @@
+.main{
+    background-color:black;
+}
+
+.head{
+    float: left;
+    padding-left: 20px;
+}
+.t1{
+    padding: 15px;
+    float: right;
+    
+}
+td{
+    padding: 10px;
+    font-size:25px;
+}

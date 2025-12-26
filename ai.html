@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Career Guidance</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  height: 100vh;
+  background: linear-gradient(135deg,#141e30,#243b55);
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+header {
+  padding: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  background: rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgba(0,229,255,0.3);
+}
+
+/* Chat Area */
+.chat-container {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* Messages */
+.message {
+  max-width: 70%;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  animation: fade 0.5s ease;
+}
+
+.user {
+  background: #00e5ff;
+  color: black;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.ai {
+  background: rgba(255,255,255,0.15);
+  border-bottom-left-radius: 0;
+}
+
+/* Input Area */
+.input-area {
+  display: flex;
+  padding: 20px;
+  background: rgba(0,0,0,0.4);
+}
+
+input {
+  flex: 1;
+  padding: 15px;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+button {
+  margin-left: 15px;
+  padding: 15px 25px;
+  border-radius: 30px;
+  border: none;
+  background: #00e5ff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1de9b6;
+  transform: scale(1.1);
+}
+
+/* Animation */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<header>🤖 AI Career Guidance Assistant</header>
+
+<div class="chat-container" id="chat">
+  <div class="message ai">
+    Hello 👋  
+    I am your AI career guide.  
+    Ask me about:
+    <br>• Career roadmap  
+    <br>• Best career options  
+    <br>• Courses after 12th  
+    <br>• Government vs Private jobs
+  </div>
+</div>
+
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="Ask your career question..." />
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+    const assessment = JSON.parse(localStorage.getItem("assessmentData"));
+
+if (!assessment) {
+  alert("Please complete assessment first");
+  window.location.href = "assessment.html";
+}
+
+
+async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const chat = document.getElementById("chat");
+  const question = input.value.trim();
+  if (!question) return;
+
+  // Show user message
+  chat.innerHTML += `<div class="message user">${question}</div>`;
+  input.value = "";
+
+  // Build personalized prompt
+  const prompt = `
+You are a professional career counselor.
+
+Student profile:
+10th percentage: ${assessment.tenth}
+12th percentage: ${assessment.twelfth}
+12th stream: ${assessment.stream}
+Interest: ${assessment.interest}
+Strong skill: ${assessment.skill}
+
+Student question:
+${question}
+
+Give a clear, step-by-step personalized answer.
+`;
+
+  // TEMP response (until backend connected)
+  chat.innerHTML += `
+    <div class="message ai">
+      🤖 Based on your profile (${assessment.stream}, ${assessment.interest}),
+      here is a personalized response:
+      <br><br>
+      You should focus on careers that match your interest and strengths.
+      Ask about a specific career for a roadmap.
+    </div>
+  `;
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+
+function generateAIResponse(q) {
+  q = q.toLowerCase();
+
+  if (q.includes("software")) {
+    return `
+    💻 <b>Software Engineer Roadmap:</b><br><br>
+    1️⃣ Learn programming (C / Python / Java)<br>
+    2️⃣ DSA & problem solving<br>
+    3️⃣ Web or App development<br>
+    4️⃣ Build projects (GitHub)<br>
+    5️⃣ Internships + placements
+    `;
+  }
+  if (q.includes("government")) {
+    return `
+    🏛️ <b>Government Career Guidance:</b><br><br>
+    • Choose exam (UPSC / MPSC / SSC / Banking)<br>
+    • Daily current affairs<br>
+    • Practice PYQs<br>
+    • Consistency is key
+    `;
+  }
+  if (q.includes("science")) {
+    return `
+    🔬 <b>Science Stream Options:</b><br>
+    Engineering, Medical, Research, Defence, Data Science
+    `;
+  }
+  if (q.includes("commerce")) {
+    return `
+    💼 <b>Commerce Careers:</b><br>
+    CA, CS, CMA, MBA, Finance, Banking
+    `;
+  }
+
+  return `
+  🤖 Based on your profile, focus on your interests,
+  strengthen your fundamentals, and start skill-based learning.
+  Ask a specific career for a detailed roadmap.
+  `;
+}
+</script>
+
+</body>
+</html>
