@@ -213,6 +213,11 @@ button:hover {
 </div>
 
 <script>
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  alert("Please login first to access assessment");
+  window.location.href = "login.html";
+}
+
 const sections = document.querySelectorAll(".section");
 const progress = document.getElementById("progress");
 let index = 0;

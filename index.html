@@ -386,6 +386,81 @@
            color: black ;
            text-decoration: none;
         }
+        /* Popup Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popup-box {
+  background: white;
+  width: 90%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  animation: popupFade 0.4s ease;
+}
+
+.popup-box h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.popup-steps {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+}
+
+.popup-steps li {
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.popup-btn {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popup-btn:hover {
+  background: #1e88e5;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+@keyframes popupFade {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -408,7 +483,7 @@
     <section id="home" class="hero">
         <h1>Find Your Dream Career</h1>
         <p>AI-Powered Career Guidance for Students</p>
-        <a href="#features" class="btn">Get Started</a>
+       <a href="#" onclick="checkLogin()" class="btn">Take Assessment</a>
     </section>
 
     <!-- Features Section -->
@@ -444,7 +519,8 @@
             </div>
             <div class="step">
                 <div class="step-number">2</div>
-                <div class="l"><h3><a href="assess.html">Take Assessment</a></h3></div>
+                <div class="l"><h3><a href="#" onclick="checkLogin()">Take Assessment</a>
+</h3></div>
                 <p>Complete our comprehensive career assessment test to identify your strengths and preferences.</p>
             </div>
             <div class="step">
@@ -582,6 +658,48 @@
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
+        
+    function checkLogin() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+        if (isLoggedIn === "true") {
+            window.location.href = "assess.html";
+        } else {
+            alert("Please login first to take the assessment.");
+            window.location.href = "login.html";
+        }
+    }
+    
+window.onload = function () {
+  setTimeout(() => {
+    document.getElementById("careerPopup").style.display = "flex";
+  }, 1000); // opens after 1 second
+};
+
+function closePopup() {
+  document.getElementById("careerPopup").style.display = "none";
+}
+
+
+
     </script>
+    <!-- Career Guidance Popup -->
+<div id="careerPopup" class="popup-overlay">
+  <div class="popup-box">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <h2>Steps to Get Career Guidance</h2>
+
+    <ul class="popup-steps">
+      <li>✅ Step 1: Login / Register your account</li>
+      <li>📝 Step 2: Complete your profile</li>
+      <li>🧠 Step 3: Take career assessment</li>
+      <li>📊 Step 4: Analyze strengths & interests</li>
+      <li>🎯 Step 5: Get personalized career guidance(Perimium)</li>
+    </ul>
+
+    <button class="popup-btn" onclick="closePopup()">Got it!</button>
+  </div>
+</div>
+
 </body>
 </html>
