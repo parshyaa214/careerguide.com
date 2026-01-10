@@ -326,7 +326,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔗 Quick Links
 
 - [Documentation](docs/)
-- [Report Bug](https://github.com/yourusername/career-guidance-system/issues)
+- [Report Bug](https://github.com/parshyaa214/careerguide.com.git/issues)
 - [Request Feature](https://github.com/yourusername/career-guidance-system/issues)
 - [Changelog](CHANGELOG.md)
 
