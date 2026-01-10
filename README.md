@@ -201,23 +201,7 @@ career-guidance-system/
 └── LICENSE               # License information
 ```
 
-## 📸 Screenshots
 
-### Homepage
-![Homepage](screenshots/homepage.png)
-*Modern landing page with hero section and feature overview*
-
-### Career Assessment
-![Assessment](screenshots/assessment.png)
-*Interactive assessment interface*
-
-### Recommendations
-![Recommendations](screenshots/recommendations.png)
-*Personalized career and course suggestions*
-
-### Responsive Design
-![Mobile View](screenshots/mobile.png)
-*Fully responsive mobile experience*
 
 ## 🚀 Future Enhancements
 
@@ -295,18 +279,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-- **Raghini Patil** - Contributor & Tester
-- **Sarvesh Chandrakude** - Contributor & Tester
-- **Chetan Chougule** - Contributor & Tester
+- **Soham** - Projrct lead
+- **Paras** - Frontend Developer
+- **Chetan Chougule** - Design 
 
 ## 📞 Contact
 
 **Project Maintainer:** [Your Name]
 
 - 📧 Email: your.email@example.com
-- 🐙 GitHub: [@yourusername](https://github.com/yourusername)
-- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- 🌐 Website: [yourwebsite.com](https://yourwebsite.com)
+- 🐙 GitHub: [@yourusername](https://github.com/parshyaa214/careerguide.com.git)
+- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/paraschavan214)
+- 🌐 Website:--
 
 ## 🙏 Acknowledgments
 
