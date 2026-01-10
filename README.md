@@ -121,7 +121,7 @@ Our platform leverages artificial intelligence to provide personalized career gu
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/career-guidance-system.git
+   git clone https://github.com/parshyaa214/careerguide.com.git
    ```
 
 2. **Navigate to project directory**
@@ -287,9 +287,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Project Maintainer:** [Your Name]
 
-- 📧 Email: your.email@example.com
-- 🐙 GitHub: [@yourusername](https://github.com/parshyaa214/careerguide.com.git)
-- 💼 LinkedIn: [Your LinkedIn](https://linkedin.com/in/paraschavan214)
+- 📧 Email: chavanparas004@gmail.com
+- 🐙 GitHub: [Paras Chavan](https://github.com/parshyaa214/careerguide.com.git)
+- 💼 LinkedIn: [Paras Chaan](https://linkedin.com/in/paraschavan214)
 - 🌐 Website:--
 
 ## 🙏 Acknowledgments
@@ -311,7 +311,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Documentation](docs/)
 - [Report Bug](https://github.com/parshyaa214/careerguide.com.git/issues)
-- [Request Feature](https://github.com/yourusername/career-guidance-system/issues)
+- [Request Feature](https://github.com/parshyaa214/career-guidance-system/issues)
 - [Changelog](CHANGELOG.md)
 
 ---
