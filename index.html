@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +16,14 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            overflow-x: hidden;
         }
 
         /* Header */
         header {
             background: #2c3e50;
             color: white;
-            padding: 10PX;
+            padding: 15px 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -30,66 +31,87 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-       nav {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-}
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            z-index: 1001;
+        }
 
-.nav-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 30px;
-}
-
-.login-btn {
-    padding: 8px 22px;
-    border: 2px solid white;
-    border-radius: 25px;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.login-btn:hover {
-    background: white;
-    color: #2c3e50;
-}
-
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
 
         .nav-links a {
             color: white;
             text-decoration: none;
             transition: opacity 0.3s;
+            display: block;
+            padding: 5px 0;
         }
 
         .nav-links a:hover {
             opacity: 0.7;
         }
 
+        .login-btn {
+            padding: 10px 22px;
+            border: 2px solid white;
+            border-radius: 10px;
+        
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .login-btn:hover {
+            background: white;
+            color: #2c3e50;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
         /* Hero Section */
         .hero {
-            background-image: url(825402.jpg);
-            background-position: 300px -25px;
-            background-size: 1400PX;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 150px 20px 100px;
             text-align: center;
             margin-top: 60px;
-            height: 500px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .hero h1 {
@@ -105,12 +127,13 @@
         .btn {
             display: inline-block;
             background: white;
-            color: #3498db;
+            color: #667eea;
             padding: 15px 40px;
             text-decoration: none;
             border-radius: 30px;
             font-weight: bold;
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
         .btn:hover {
@@ -121,9 +144,13 @@
         /* Sections */
         section {
             width: 100%;
-            padding: 80px 0;
+            padding: 60px 20px;
         }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
         h2 {
             text-align: center;
@@ -133,11 +160,14 @@
         }
 
         /* Features Section */
+        #features {
+            background: #f8f9fa;
+        }
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-        ;
         }
 
         .feature-card {
@@ -182,6 +212,7 @@
         .feature-card p {
             color: #666;
             line-height: 1.8;
+            font-size: 1rem;
         }
 
         /* How It Works Section */
@@ -190,22 +221,18 @@
         }
 
         .steps {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
-           ;
         }
 
         .step {
             text-align: center;
-            flex: 1;
-            min-width: 250px;
         }
 
         .step-number {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             background: #3498db;
             border-radius: 50%;
             display: flex;
@@ -233,9 +260,23 @@
 
         .step p {
             color: #666;
+            font-size: 1rem;
+        }
+
+        .l a {
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .l a:hover {
+            opacity: 0.7;
         }
 
         /* Career Categories */
+        #categories {
+            background: #f8f9fa;
+        }
+
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -243,7 +284,7 @@
         }
 
         .category-card {
-            background: #ecf0f1;
+            background: white;
             padding: 30px;
             border-radius: 15px;
             text-align: center;
@@ -286,7 +327,7 @@
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
 
@@ -313,6 +354,7 @@
             justify-content: center;
             font-size: 1.5rem;
             margin-right: 15px;
+            flex-shrink: 0;
         }
 
         .testimonial-card:nth-child(2) .testimonial-avatar {
@@ -326,6 +368,7 @@
         .testimonial-name {
             font-weight: bold;
             color: #2c3e50;
+            font-size: 1rem;
         }
 
         .testimonial-text {
@@ -333,6 +376,7 @@
             font-style: italic;
             margin-bottom: 15px;
             line-height: 1.8;
+            font-size: 1rem;
         }
 
         .stars {
@@ -351,7 +395,7 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
             margin-bottom: 30px;
         }
@@ -373,6 +417,7 @@
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s;
+            font-size: 1rem;
         }
 
         .footer-section a:hover {
@@ -384,34 +429,7 @@
             padding-top: 30px;
             border-top: 1px solid #4a5f7f;
             color: #bdc3c7;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            h2 {
-                font-size: 2rem;
-            }
-
-            .nav-links {
-                gap: 15px;
-            }
-
-            .steps {
-                flex-direction: column;
-            }
-        }
-
-        .l a {
-            color: black;
-            text-decoration: none;
+            font-size: 1rem;
         }
 
         /* Popup Styles */
@@ -426,6 +444,11 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            padding: 20px;
+        }
+
+        .popup-overlay.active {
+            display: flex;
         }
 
         .popup-box {
@@ -437,11 +460,14 @@
             text-align: center;
             position: relative;
             animation: popupFade 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .popup-box h2 {
             color: #2c3e50;
             margin-bottom: 20px;
+            font-size: 1.8rem;
         }
 
         .popup-steps {
@@ -464,6 +490,7 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .popup-btn:hover {
@@ -476,6 +503,11 @@
             right: 20px;
             font-size: 25px;
             cursor: pointer;
+            color: #666;
+        }
+
+        .close-btn:hover {
+            color: #333;
         }
 
         @keyframes popupFade {
@@ -483,30 +515,169 @@
                 transform: scale(0.8);
                 opacity: 0;
             }
-
             to {
                 transform: scale(1);
                 opacity: 1;
             }
         }
-        .logo {
-    position: absolute;
-    left: 20px;
-}
-@media (max-width: 768px) {
-    .nav-links {
-        position: static;
-        transform: none;
-        justify-content: center;
-        margin-top: 10px;
-    }
 
-    .login-btn {
-        margin-left: 10px;
-    }
-}
+        /* Tablet Responsive (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 20px;
+            }
 
+            .nav-links a {
+                font-size: 0.95rem;
+            }
 
+            section {
+                padding: 50px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Mobile Responsive (max-width: 768px) */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav {
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #2c3e50;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .nav-links.active {
+                max-height: 500px;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                padding: 15px 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links a {
+                padding: 10px 0;
+            }
+
+            .hero {
+                padding: 120px 20px 80px;
+                min-height: 400px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .features-grid,
+            .steps,
+            .categories-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 40px 15px;
+            }
+
+            .feature-card,
+            .category-card,
+            .testimonial-card {
+                padding: 30px 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .popup-box {
+                padding: 25px 20px;
+            }
+
+            .popup-box h2 {
+                font-size: 1.5rem;
+            }
+
+            .popup-steps li {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Small Mobile (max-width: 480px) */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 0.95rem;
+            }
+
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+
+            .step-number {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+
+            .feature-card,
+            .category-card,
+            .testimonial-card {
+                padding: 25px 15px;
+            }
+
+            h2 {
+                margin-bottom: 2rem;
+                font-size: 1.8rem;
+            }
+
+            .popup-box {
+                width: 95%;
+                padding: 20px 15px;
+            }
+
+            .popup-box h2 {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 
@@ -514,134 +685,136 @@
     <!-- Header -->
     <header>
         <nav>
-    <div class="logo">Career Guide</div>
-
-    <div class="nav-center">
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#categories">Courses</a></li>
-            <li><a href="#testimonials">Reviews</a></li>
-            <li><a href="#footer">Contact</a></li>
-        </ul>
-    </div>
-
-    <a href="login.html" class="login-btn">Login</a>
-</nav>
-
+            <div class="logo">Career Guide</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#features" onclick="closeMenu()">Features</a></li>
+                <li><a href="#categories" onclick="closeMenu()">Courses</a></li>
+                <li><a href="#testimonials" onclick="closeMenu()">Reviews</a></li>
+                <li><a href="#footer" onclick="closeMenu()">Contact</a></li>
+                <li><a href="login.html" onclick="handleLogin()" class="login-btn">Login</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
         <h1>Find Your Dream Career</h1>
         <p>AI-Powered Career Guidance for Students</p>
-        <a href="#" onclick="checkLogin()" class="btn">Take Assessment</a>
+        <a href="assess.html" onclick="checkLogin()" class="btn">Take Assessment</a>
     </section>
 
     <!-- Features Section -->
     <section id="features">
-        <h2>Our Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Career Assessment</h3>
-                <p>Take personalized tests to discover your ideal career path based on your interests, skills, and
-                    personality.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📚</div>
-                <h3>Course Recommendations</h3>
-                <p>Get AI-powered suggestions for courses and programs that align with your career goals and
-                    aspirations.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💼</div>
-                <h3>Job Insights</h3>
-                <p>Explore career opportunities, salary trends, and market demands in various industries worldwide.</p>
+        <div class="container">
+            <h2>Our Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Career Assessment</h3>
+                    <p>Take personalized tests to discover your ideal career path based on your interests, skills, and personality.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Course Recommendations</h3>
+                    <p>Get AI-powered suggestions for courses and programs that align with your career goals and aspirations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Job Insights</h3>
+                    <p>Explore career opportunities, salary trends, and market demands in various industries worldwide.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- How It Works Section -->
     <section class="how-it-works">
-        <h2>How It Works</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="l">
-                    <h3><a href="login.html">Login</a></h3>
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="l">
+                        <h3><a href="login.html" onclick="handleLogin()">Login</a></h3>
+                    </div>
+                    <p>Create your account and complete your profile with your academic background and interests.</p>
                 </div>
-                <p>Create your account and complete your profile with your academic background and interests.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="l">
-                    <h3><a href="#" onclick="checkLogin()">Take Assessment</a>
-                    </h3>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="l">
+                        <h3><a href="assess.html" onclick="checkLogin()">Take Assessment</a></h3>
+                    </div>
+                    <p>Complete our comprehensive career assessment test to identify your strengths and preferences.</p>
                 </div>
-                <p>Complete our comprehensive career assessment test to identify your strengths and preferences.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Get Guidance</h3>
-                <p>Receive personalized career path recommendations and resources to achieve your goals.</p>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Guidance</h3>
+                    <p>Receive personalized career path recommendations and resources to achieve your goals.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Career Categories Section -->
     <section id="categories">
-        <h2>Popular Career Fields</h2>
-        <div class="categories-grid">
-            <div class="category-card">
-                <h3>🔬 Science & Technology</h3>
-                <p>Engineering, IT, Research, Data Science, Software Development</p>
-            </div>
-            <div class="category-card">
-                <h3>🏥 Healthcare</h3>
-                <p>Medicine, Nursing, Pharmacy, Biotechnology, Medical Research</p>
-            </div>
-            <div class="category-card">
-                <h3>💼 Business</h3>
-                <p>Management, Finance, Marketing, Entrepreneurship, Consulting</p>
-            </div>
-            <div class="category-card">
-                <h3>🎨 Creative Arts</h3>
-                <p>Design, Media, Entertainment, Animation, Digital Content</p>
+        <div class="container">
+            <h2>Popular Career Fields</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <h3>🔬 Science & Technology</h3>
+                    <p>Engineering, IT, Research, Data Science, Software Development</p>
+                </div>
+                <div class="category-card">
+                    <h3>🏥 Healthcare</h3>
+                    <p>Medicine, Nursing, Pharmacy, Biotechnology, Medical Research</p>
+                </div>
+                <div class="category-card">
+                    <h3>💼 Business</h3>
+                    <p>Management, Finance, Marketing, Entrepreneurship, Consulting</p>
+                </div>
+                <div class="category-card">
+                    <h3>🎨 Creative Arts</h3>
+                    <p>Design, Media, Entertainment, Animation, Digital Content</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials">
-        <h2>What Students Say</h2>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">👤</div>
-                    <div class="testimonial-name">Raghini Patil</div>
+        <div class="container">
+            <h2>What Students Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-name">Raghini Patil</div>
+                    </div>
+                    <p class="testimonial-text">"This platform helped me choose the right career path. The AI recommendations were spot-on and guided me towards engineering!"</p>
+                    <div class="stars">★★★★★</div>
                 </div>
-                <p class="testimonial-text">"This platform helped me choose the right career path. The AI
-                    recommendations were spot-on and guided me towards engineering!"</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">👤</div>
-                    <div class="testimonial-name">Sarvesh Chandrakude</div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-name">Sarvesh Chandrakude</div>
+                    </div>
+                    <p class="testimonial-text">"Great AI recommendations and career guidance! I discovered career options I never knew existed. Highly recommend!"</p>
+                    <div class="stars">★★★★★</div>
                 </div>
-                <p class="testimonial-text">"Great AI recommendations and career guidance! I discovered career options I
-                    never knew existed. Highly recommend!"</p>
-                <div class="stars">★★★★★</div>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">👤</div>
-                    <div class="testimonial-name">Chetan Chougule</div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">👤</div>
+                        <div class="testimonial-name">Chetan Chougule</div>
+                    </div>
+                    <p class="testimonial-text">"Found my dream career thanks to this site! The assessment was accurate and the guidance was incredibly helpful."</p>
+                    <div class="stars">★★★★★</div>
                 </div>
-                <p class="testimonial-text">"Found my dream career thanks to this site! The assessment was accurate and
-                    the guidance was incredibly helpful."</p>
-                <div class="stars">★★★★★</div>
             </div>
         </div>
     </section>
@@ -661,19 +834,19 @@
             <div class="footer-section">
                 <h3>Resources</h3>
                 <ul>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Support</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="javascript:void(0)">Blog</a></li>
+                    <li><a href="javascript:void(0)">FAQs</a></li>
+                    <li><a href="javascript:void(0)">Support</a></li>
+                    <li><a href="javascript:void(0)">Privacy Policy</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Follow Us</h3>
                 <ul>
-                    <li><a href="#">LinkedIn</a></li>
-                    <li><a href="#">Twitter</a></li>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Facebook</a></li>
+                    <li><a href="javascript:void(0)">LinkedIn</a></li>
+                    <li><a href="javascript:void(0)">Twitter</a></li>
+                    <li><a href="javascript:void(0)">Instagram</a></li>
+                    <li><a href="javascript:void(0)">Facebook</a></li>
                 </ul>
             </div>
         </div>
@@ -682,12 +855,28 @@
         </div>
     </footer>
 
+    <!-- Career Guidance Popup -->
+    <div id="careerPopup" class="popup-overlay">
+        <div class="popup-box">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h2>Steps to Get Career Guidance</h2>
+            <ul class="popup-steps">
+                <li>✅ Step 1: Login / Register your account</li>
+                <li>📝 Step 2: Complete your profile</li>
+                <li>🧠 Step 3: Take career assessment</li>
+                <li>📊 Step 4: Analyze strengths & interests</li>
+                <li>🎯 Step 5: Get personalized career guidance (Premium)</li>
+            </ul>
+            <button class="popup-btn" onclick="closePopup()">Got it!</button>
+        </div>
+    </div>
+
     <script>
         // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                var target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth',
@@ -697,14 +886,25 @@
             });
         });
 
+        // Mobile menu toggle
+        function toggleMenu() {
+            var navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            var navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
         // Add scroll animation to sections
-        const observerOptions = {
+        var observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
 
-        const observer = new IntersectionObserver(function (entries) {
-            entries.forEach(entry => {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
@@ -713,55 +913,49 @@
         }, observerOptions);
 
         // Observe all cards for animation
-        document.querySelectorAll('.feature-card, .category-card, .testimonial-card, .step').forEach(card => {
+        var cards = document.querySelectorAll('.feature-card, .category-card, .testimonial-card, .step');
+        cards.forEach(function(card) {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
 
-        function checkLogin() {
-            const isLoggedIn = localStorage.getItem("isLoggedIn");
+        function handleLogin() {
+            alert("Login functionality - redirect to login page");
+        }
 
-            if (isLoggedIn === "true") {
-                window.location.href = "assess.html";
-            } else {
-                alert("Please login first to take the assessment.");
-                window.location.href = "login.html";
+        function checkLogin() {
+            alert("Please login first to take the assessment.");
+        }
+
+        function closePopup() {
+            var popup = document.getElementById("careerPopup");
+            if (popup) {
+                popup.classList.remove('active');
             }
         }
 
-        window.onload = function () {
-            setTimeout(() => {
-                document.getElementById("careerPopup").style.display = "flex";
-            }, 1000); // opens after 1 second
-        };
+        // Show popup after 1 second
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var popup = document.getElementById("careerPopup");
+                if (popup) {
+                    popup.classList.add('active');
+                }
+            }, 1000);
+        });
 
-        function closePopup() {
-            document.getElementById("careerPopup").style.display = "none";
+        // Close popup when clicking outside
+        var popupOverlay = document.getElementById('careerPopup');
+        if (popupOverlay) {
+            popupOverlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
         }
-
-
-
     </script>
-    <!-- Career Guidance Popup -->
-    <div id="careerPopup" class="popup-overlay">
-        <div class="popup-box">
-            <span class="close-btn" onclick="closePopup()">×</span>
-            <h2>Steps to Get Career Guidance</h2>
-
-            <ul class="popup-steps">
-                <li>✅ Step 1: Login / Register your account</li>
-                <li>📝 Step 2: Complete your profile</li>
-                <li>🧠 Step 3: Take career assessment</li>
-                <li>📊 Step 4: Analyze strengths & interests</li>
-                <li>🎯 Step 5: Get personalized career guidance(Perimium)</li>
-            </ul>
-
-            <button class="popup-btn" onclick="closePopup()">Got it!</button>
-        </div>
-    </div>
-
 </body>
 
 </html>
